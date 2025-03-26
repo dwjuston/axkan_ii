@@ -34,10 +34,43 @@ The game is automatically deployed to GitHub Pages when changes are pushed to th
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="0; url=https://dwjuston.github.io/axkan_ii/">
-    <title>Redirecting to Axkan II...</title>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url=https://dwjuston.github.io/axkan_ii/game/">
+    <title>Axkan II - Redirecting to Game...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to Axkan II... If you are not redirected automatically, <a href="https://dwjuston.github.io/axkan_ii/">click here</a>.</p>
+    <div class="container">
+        <h1>Axkan II</h1>
+        <p>Redirecting to the game... If you are not redirected automatically, <a href="https://dwjuston.github.io/axkan_ii/game/">click here</a>.</p>
+    </div>
 </body>
 </html> 
