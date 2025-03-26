@@ -30,3 +30,14 @@ To run the game locally:
 ## Deployment
 
 The game is automatically deployed to GitHub Pages when changes are pushed to the main branch. 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=https://dwjuston.github.io/axkan_ii/">
+    <title>Redirecting to Axkan II...</title>
+</head>
+<body>
+    <p>Redirecting to Axkan II... If you are not redirected automatically, <a href="https://dwjuston.github.io/axkan_ii/">click here</a>.</p>
+</body>
+</html> 
