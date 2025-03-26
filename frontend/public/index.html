@@ -29,21 +29,23 @@
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
-      var pathSegmentsToKeep = 2;
-      var l = window.location;
-      var r = l.pathname.split('/').slice(1);
-      var deploySubdir = r.slice(0, pathSegmentsToKeep).join('/');
-      var repo = l.pathname.slice(0, 1) + '/' + (r.length > 0 ? r[0] : '');
-      var restOfPath = r.slice(pathSegmentsToKeep).join('/');
-
-      // Determine the correct base URL
-      var baseUrl = l.origin + '/' + deploySubdir;
-      var gameUrl = baseUrl + '/game/';
-
-      // Redirect to the game URL if we're not already there
-      if (!l.pathname.includes('/game/')) {
-        window.location.replace(gameUrl);
-      }
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
     </script>
   </head>
   <body>
