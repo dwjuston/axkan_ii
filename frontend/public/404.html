@@ -7,25 +7,22 @@
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
-      var pathSegmentsToKeep = 1;
+      var pathSegmentsToKeep = 2;
       var l = window.location;
       var r = l.pathname.split('/').slice(1);
-      var s = r.slice(0, pathSegmentsToKeep).join('/') + '/';
-      var m = l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/');
-      var f = l.hash;
-      var d = l.search;
-      var p = l.pathname.slice(0, 1) + s + m;
-      var h = l.origin;
-      var u = h + p + f + d;
-      var a = document.createElement('a');
-      a.href = u;
-      a.click();
+      var deploySubdir = r.slice(0, pathSegmentsToKeep).join('/');
+      var repo = l.pathname.slice(0, 1) + '/' + (r.length > 0 ? r[0] : '');
+      var restOfPath = r.slice(pathSegmentsToKeep).join('/');
+
+      // Determine the correct base URL
+      var baseUrl = l.origin + '/' + deploySubdir;
+      var gameUrl = baseUrl + '/game/';
+
+      // Redirect to the game URL
+      window.location.replace(gameUrl);
     </script>
   </head>
   <body>
-    <noscript>
-      <h1>Axkan II</h1>
-      <p>Please enable JavaScript to use this application.</p>
-    </noscript>
+    <p>Redirecting to Axkan II game...</p>
   </body>
 </html> 

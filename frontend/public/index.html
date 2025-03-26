@@ -26,16 +26,24 @@
     -->
     <title>Axkan II</title>
     <script type="text/javascript">
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      var pathSegmentsToKeep = 2;
+      var l = window.location;
+      var r = l.pathname.split('/').slice(1);
+      var deploySubdir = r.slice(0, pathSegmentsToKeep).join('/');
+      var repo = l.pathname.slice(0, 1) + '/' + (r.length > 0 ? r[0] : '');
+      var restOfPath = r.slice(pathSegmentsToKeep).join('/');
+
+      // Determine the correct base URL
+      var baseUrl = l.origin + '/' + deploySubdir;
+      var gameUrl = baseUrl + '/game/';
+
+      // Redirect to the game URL if we're not already there
+      if (!l.pathname.includes('/game/')) {
+        window.location.replace(gameUrl);
+      }
     </script>
   </head>
   <body>
