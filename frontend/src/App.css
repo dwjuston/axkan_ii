@@ -1,0 +1,518 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 20px;
+  position: relative;
+  padding-left: 320px;
+  padding-right: 220px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.turn-display {
+  margin: 0;
+}
+
+.turn-display h2 {
+  margin: 0;
+  color: #61dafb;
+}
+
+.stock-price {
+  margin: 0;
+}
+
+.stock-price h3 {
+  margin: 0;
+  color: #61dafb;
+}
+
+.dice-result {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dice-result h3 {
+  margin: 0;
+  color: #61dafb;
+}
+
+.dice-result p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.next-turn-button {
+  background-color: #61dafb;
+  border: none;
+  border-radius: 8px;
+  color: #282c34;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 1rem 0;
+}
+
+.next-turn-button:hover {
+  background-color: #4fa8c7;
+}
+
+.next-turn-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.next-turn-button:disabled:hover {
+  background-color: #cccccc;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #61dafb;
+}
+
+/* Stock Price */
+.roll-button {
+  background-color: #61dafb;
+  border: none;
+  border-radius: 4px;
+  color: #282c34;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.roll-button:hover {
+  background-color: #4fa8c7;
+}
+
+/* Selected Cards Info */
+.selected-cards-info {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(40, 44, 52, 0.95);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  z-index: 100;
+  max-width: 300px;
+}
+
+.selected-red, .selected-black {
+  margin-bottom: 1rem;
+}
+
+.selected-cards {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.selected-value {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.selected-value h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Card Styles */
+.card-pairs {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  justify-content: center;
+  padding: 0 250px;
+}
+
+.card-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.card-pair .card {
+  transform: scale(0.9);
+}
+
+.card-pair .card.big {
+  transform: scale(1.1);
+}
+
+.card {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card.small {
+  transform: scale(0.8);
+}
+
+.card.big {
+  transform: scale(1.2);
+}
+
+.select-pair-button {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.select-pair-button:hover {
+  background-color: #45a049;
+}
+
+.select-pair-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.select-pair-button:disabled:hover {
+  background-color: #cccccc;
+}
+
+/* Draw Pile Styles */
+.draw-pile-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+}
+
+.draw-pile-button {
+  background-color: #61dafb;
+  border: none;
+  border-radius: 8px;
+  color: #282c34;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.draw-pile-button:hover {
+  background-color: #4fa8c7;
+}
+
+.draw-pile {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background-color: rgba(40, 44, 52, 0.95);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  gap: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.suit-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 60px;
+}
+
+.suit-header {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.5rem;
+}
+
+.draw-pile .card {
+  font-size: 1rem;
+  padding: 0.5rem;
+  min-width: 40px;
+  transform: none;
+}
+
+.game-start-button {
+  background-color: #61dafb;
+  border: none;
+  border-radius: 8px;
+  color: #282c34;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 1rem 0;
+}
+
+.game-start-button:hover {
+  background-color: #4fa8c7;
+}
+
+.game-start-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.game-start-button:disabled:hover {
+  background-color: #cccccc;
+}
+
+.breakeven-price {
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  text-align: center;
+  background-color: rgba(40, 44, 52, 0.8);
+  border-radius: 4px;
+  padding: 0 0.5rem;
+}
+
+.game-ended {
+  background-color: rgba(40, 44, 52, 0.95);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.game-ended h3 {
+  color: #61dafb;
+  margin-bottom: 1rem;
+}
+
+.game-ended p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+/* Game Status Section */
+.game-status {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  background-color: rgba(40, 44, 52, 0.95);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  min-width: 200px;
+}
+
+.game-status h2 {
+  margin: 0;
+  color: #61dafb;
+  font-size: 1.2rem;
+}
+
+.game-status h3 {
+  margin: 0;
+  color: #61dafb;
+  font-size: 1.2rem;
+}
+
+.game-status p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.price-change {
+  font-size: 0.9em;
+  margin-left: 0.5rem;
+  color: #4CAF50;
+}
+
+.price-change:not(:has(+)) {
+  color: #f44336;
+}
+
+.extra-pair {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(40, 44, 52, 0.95);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.extra-pair .card-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.extra-pair .card {
+  transform: scale(0.9);
+}
+
+.extra-pair .card.big {
+  transform: scale(1.1);
+}
+
+.extra-pair .breakeven-price {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.seven-cards {
+  position: fixed;
+  bottom: 20px;
+  right: 200px;
+  display: flex;
+  gap: 1rem;
+  background-color: rgba(40, 44, 52, 0.95);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.seven-card {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 1.5rem;
+  background-color: white;
+  color: black;
+}
+
+.seven-card:hover {
+  background-color: rgba(97, 218, 251, 0.1);
+}
+
+.seven-card.highlighted {
+  background-color: rgba(97, 218, 251, 0.2);
+  box-shadow: 0 0 0 2px #61dafb;
+}
+
+.special-turn-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.next-turn-button.inflation {
+  background-color: #4CAF50;
+}
+
+.next-turn-button.inflation:hover {
+  background-color: #45a049;
+}
+
+.next-turn-button.tapering {
+  background-color: #f44336;
+}
+
+.next-turn-button.tapering:hover {
+  background-color: #da190b;
+}
+
+.card.convertible {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.card.convertible:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
+}
+
+.card.convertible::after {
+  content: 'Click to convert';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: #61dafb;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card.convertible:hover::after {
+  opacity: 1;
+}
+
