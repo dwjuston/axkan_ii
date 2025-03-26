@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { createDeck, drawCards, drawSinglePair, formatCard, sortCards } from './utils/cardUtils';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   // Game state
@@ -248,194 +249,196 @@ function App() {
   const { bigRedCards, bigBlackCards, totalCost, totalValue, pnl } = getSelectedCardsInfo();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* Selected Cards Info */}
-        <div className="selected-cards-info">
-          <div className="selected-red">
-            <h3>Selected Red Cards:</h3>
-            <div className="selected-cards">
-              {bigRedCards.map((card, index) => (
-                <div 
-                  key={`red-${index}`} 
-                  className={`card ${hasHighlightedSeven && turnNumber === MAX_TURNS ? 'convertible' : ''}`}
-                  onClick={() => handleCardColorChange(card)}
-                >
-                  {formatCard(card)}
-                </div>
-              ))}
+    <Router basename="/axkan_ii">
+      <div className="App">
+        <header className="App-header">
+          {/* Selected Cards Info */}
+          <div className="selected-cards-info">
+            <div className="selected-red">
+              <h3>Selected Red Cards:</h3>
+              <div className="selected-cards">
+                {bigRedCards.map((card, index) => (
+                  <div 
+                    key={`red-${index}`} 
+                    className={`card ${hasHighlightedSeven && turnNumber === MAX_TURNS ? 'convertible' : ''}`}
+                    onClick={() => handleCardColorChange(card)}
+                  >
+                    {formatCard(card)}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="selected-black">
+              <h3>Selected Black Cards:</h3>
+              <div className="selected-cards">
+                {bigBlackCards.map((card, index) => (
+                  <div 
+                    key={`black-${index}`} 
+                    className={`card ${hasHighlightedSeven && turnNumber === MAX_TURNS ? 'convertible' : ''}`}
+                    onClick={() => handleCardColorChange(card)}
+                  >
+                    {formatCard(card)}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="selected-value">
+              <h3>Total Cost: {totalCost}</h3>
+              <h3>Total Value: {totalValue}</h3>
+              <h3>PnL: {pnl}</h3>
             </div>
           </div>
-          <div className="selected-black">
-            <h3>Selected Black Cards:</h3>
-            <div className="selected-cards">
-              {bigBlackCards.map((card, index) => (
-                <div 
-                  key={`black-${index}`} 
-                  className={`card ${hasHighlightedSeven && turnNumber === MAX_TURNS ? 'convertible' : ''}`}
-                  onClick={() => handleCardColorChange(card)}
-                >
-                  {formatCard(card)}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="selected-value">
-            <h3>Total Cost: {totalCost}</h3>
-            <h3>Total Value: {totalValue}</h3>
-            <h3>PnL: {pnl}</h3>
-          </div>
-        </div>
 
-        {/* Game Status Info */}
-        <div className="game-status">
-          <div className="turn-display">
-            <h2>Turn: {turnNumber}</h2>
+          {/* Game Status Info */}
+          <div className="game-status">
+            <div className="turn-display">
+              <h2>Turn: {turnNumber}</h2>
+            </div>
+            
+            <div className="stock-price">
+              <h3>
+                Stock Price: {stockPrice !== null ? (
+                  <>
+                    {stockPrice}
+                    {diceResult && (
+                      <span className="price-change">
+                        ({diceResult.result > 0 ? '+' : ''}{diceResult.result})
+                      </span>
+                    )}
+                  </>
+                ) : 'Roll to start'}
+              </h3>
+              {isInitialRoll && (
+                <button onClick={handleInitialRoll} className="roll-button">
+                  Roll for Initial Price
+                </button>
+              )}
+            </div>
+
+            <div className="dice-result">
+              {diceResult && (
+                <div>
+                  <h3>Dice:</h3>
+                  <p>
+                    {diceResult.dice1},{diceResult.dice2}
+                    {diceResult.dice3 && `,${diceResult.dice3}`}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
           
-          <div className="stock-price">
-            <h3>
-              Stock Price: {stockPrice !== null ? (
-                <>
-                  {stockPrice}
-                  {diceResult && (
-                    <span className="price-change">
-                      ({diceResult.result > 0 ? '+' : ''}{diceResult.result})
-                    </span>
-                  )}
-                </>
-              ) : 'Roll to start'}
-            </h3>
-            {isInitialRoll && (
-              <button onClick={handleInitialRoll} className="roll-button">
-                Roll for Initial Price
-              </button>
-            )}
-          </div>
-
-          <div className="dice-result">
-            {diceResult && (
-              <div>
-                <h3>Dice:</h3>
-                <p>
-                  {diceResult.dice1},{diceResult.dice2}
-                  {diceResult.dice3 && `,${diceResult.dice3}`}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-        
-        {/* Card Pairs Display */}
-        {!gameEnded && (
-          <div className="card-pairs">
-            {currentPairs.map((pair, index) => (
-              <div key={index} className="card-pair">
-                <div className="card big">{formatCard(pair.big)}</div>
-                <div className="card small">{formatCard(pair.small)}</div>
-                <div className="breakeven-price">
-                  Breakeven: {getBreakevenPrice(pair)}
+          {/* Card Pairs Display */}
+          {!gameEnded && (
+            <div className="card-pairs">
+              {currentPairs.map((pair, index) => (
+                <div key={index} className="card-pair">
+                  <div className="card big">{formatCard(pair.big)}</div>
+                  <div className="card small">{formatCard(pair.small)}</div>
+                  <div className="breakeven-price">
+                    Breakeven: {getBreakevenPrice(pair)}
+                  </div>
+                  <button 
+                    onClick={() => handleSelectPair(pair)}
+                    className="select-pair-button"
+                    disabled={hasSelectedPair}
+                  >
+                    Select Pair
+                  </button>
                 </div>
-                <button 
-                  onClick={() => handleSelectPair(pair)}
-                  className="select-pair-button"
-                  disabled={hasSelectedPair}
+              ))}
+            </div>
+          )}
+
+          {/* Extra Pair Display */}
+          {gameStarted && extraPair && (
+            <div className="extra-pair">
+              <div className="card-pair">
+                <div 
+                  className={`card big ${hasHighlightedSeven && turnNumber === MAX_TURNS ? 'convertible' : ''}`}
+                  onClick={() => handleCardColorChange(extraPair.big, true)}
                 >
-                  Select Pair
+                  {formatCard(extraPair.big)}
+                </div>
+                <div className="card small">{formatCard(extraPair.small)}</div>
+                <div className="breakeven-price">
+                  Breakeven: {getBreakevenPrice(extraPair)}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Seven Cards Display */}
+          {gameStarted && (
+            <div className="seven-cards">
+              {sevenCards.map((card, index) => (
+                <div 
+                  key={index} 
+                  className={`seven-card ${card.highlighted ? 'highlighted' : ''}`}
+                  onClick={() => handleSevenCardClick(index)}
+                >
+                  {formatCard(card)}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Game Control Buttons */}
+          {!gameStarted ? (
+            <button 
+              onClick={handleGameStart} 
+              className="game-start-button"
+              disabled={isInitialRoll}
+            >
+              Game Start
+            </button>
+          ) : !gameEnded ? (
+            hasHighlightedSeven ? (
+              <div className="special-turn-buttons">
+                <button 
+                  onClick={() => handleNextTurn('inflation')} 
+                  className="next-turn-button inflation"
+                  disabled={!hasSelectedPair}
+                >
+                  Next Turn: Inflation
+                </button>
+                <button 
+                  onClick={() => handleNextTurn('tapering')} 
+                  className="next-turn-button tapering"
+                  disabled={!hasSelectedPair}
+                >
+                  Next Turn: Tapering
                 </button>
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Extra Pair Display */}
-        {gameStarted && extraPair && (
-          <div className="extra-pair">
-            <div className="card-pair">
-              <div 
-                className={`card big ${hasHighlightedSeven && turnNumber === MAX_TURNS ? 'convertible' : ''}`}
-                onClick={() => handleCardColorChange(extraPair.big, true)}
-              >
-                {formatCard(extraPair.big)}
-              </div>
-              <div className="card small">{formatCard(extraPair.small)}</div>
-              <div className="breakeven-price">
-                Breakeven: {getBreakevenPrice(extraPair)}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Seven Cards Display */}
-        {gameStarted && (
-          <div className="seven-cards">
-            {sevenCards.map((card, index) => (
-              <div 
-                key={index} 
-                className={`seven-card ${card.highlighted ? 'highlighted' : ''}`}
-                onClick={() => handleSevenCardClick(index)}
-              >
-                {formatCard(card)}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Game Control Buttons */}
-        {!gameStarted ? (
-          <button 
-            onClick={handleGameStart} 
-            className="game-start-button"
-            disabled={isInitialRoll}
-          >
-            Game Start
-          </button>
-        ) : !gameEnded ? (
-          hasHighlightedSeven ? (
-            <div className="special-turn-buttons">
+            ) : (
               <button 
-                onClick={() => handleNextTurn('inflation')} 
-                className="next-turn-button inflation"
+                onClick={() => handleNextTurn()} 
+                className="next-turn-button"
                 disabled={!hasSelectedPair}
               >
-                Next Turn: Inflation
+                Next Turn
               </button>
-              <button 
-                onClick={() => handleNextTurn('tapering')} 
-                className="next-turn-button tapering"
-                disabled={!hasSelectedPair}
-              >
-                Next Turn: Tapering
-              </button>
-            </div>
+            )
           ) : (
-            <button 
-              onClick={() => handleNextTurn()} 
-              className="next-turn-button"
-              disabled={!hasSelectedPair}
-            >
-              Next Turn
-            </button>
-          )
-        ) : (
-          <div className="game-ended">
-            <h3>Game Ended</h3>
-            <p>Final Results:</p>
-            <p>Total Cost: {totalCost}</p>
-            <p>Total Value: {totalValue}</p>
-            <p>PnL: {pnl}</p>
-          </div>
-        )}
+            <div className="game-ended">
+              <h3>Game Ended</h3>
+              <p>Final Results:</p>
+              <p>Total Cost: {totalCost}</p>
+              <p>Total Value: {totalValue}</p>
+              <p>PnL: {pnl}</p>
+            </div>
+          )}
 
-        {/* Draw Pile Button and Display */}
-        <div className="draw-pile-container">
-          <button onClick={() => setShowDrawPile(!showDrawPile)} className="draw-pile-button">
-            Draw Pile ({deck.length})
-          </button>
-          {showDrawPile && renderDrawPile()}
-        </div>
-      </header>
-    </div>
+          {/* Draw Pile Button and Display */}
+          <div className="draw-pile-container">
+            <button onClick={() => setShowDrawPile(!showDrawPile)} className="draw-pile-button">
+              Draw Pile ({deck.length})
+            </button>
+            {showDrawPile && renderDrawPile()}
+          </div>
+        </header>
+      </div>
+    </Router>
   );
 }
 
