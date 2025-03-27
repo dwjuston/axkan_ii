@@ -4,7 +4,7 @@ Welcome to Axkan II! This is a card game that combines strategy and chance.
 
 ## Play the Game
 
-[Click here to play Axkan II](https://dwjuston.github.io/axkan_ii/)
+[Click here to play Axkan II](https://dwjuston.github.io/axkan_ii/game/)
 
 ## Development
 
